@@ -6,26 +6,33 @@
     <title>Cookie Test</title>
     <style>
         body { font-family: sans-serif; text-align: center; padding-top: 50px; }
-        button { padding: 15px 25px; font-size: 16px; margin: 10px; cursor: pointer; }
+        input { padding: 10px; font-size: 16px; margin: 10px; width: 200px; }
+        button { padding: 12px 20px; font-size: 16px; margin: 5px; cursor: pointer; }
     </style>
 </head>
 <body>
 
     <h2>JavaScript Cookie Test</h2>
-    <button onclick="createTestCookie()">1. Create Cookie</button>
+    
+    <div>
+        <input type="text" id="cookieValue" value="GitHubTest" placeholder="Enter value">
+    </div>
+    
+    <button onclick="createCookie()">1. Create Cookie</button>
     <button onclick="showCookie()">2. Read Cookie</button>
 
     <script>
-        function createTestCookie() {
-            // Sets a cookie named "mobile_user" that lasts 1 day
+        function createCookie() {
+            const value = document.getElementById('cookieValue').value;
             const date = new Date();
-            date.setTime(date.getTime() + (1 * 24 * 60 * 60 * 1000));
-            document.cookie = "mobile_user=GitHubTest; expires=" + date.toUTCString() + "; path=/; SameSite=Lax";
-            alert("Cookie created successfully!");
+            date.setTime(date.getTime() + (1 * 24 * 60 * 60 * 1000)); // 1 day lifespan
+            
+            document.cookie = "mobile_user=" + encodeURIComponent(value) + "; expires=" + date.toUTCString() + "; path=/; SameSite=Lax; Secure";
+            alert("Cookie created!");
         }
 
         function showCookie() {
-            alert("Current Document Cookies:\n" + document.cookie);
+            alert("Current Cookies:\n" + decodeURIComponent(document.cookie));
         }
     </script>
 </body>
